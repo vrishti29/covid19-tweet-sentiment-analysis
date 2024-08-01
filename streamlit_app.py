@@ -28,6 +28,6 @@ with st.expander('Data visualization'):
 
 with stsidebar:
   st.header('Input Features')
-  sentiment = st.selectbox("Sentiment", ('Extremely Positive', 'Positive', 'Neutral', 'Neutral', 'Extremely Neutral')
+  sentiment = st.selectbox("Sentiment", ('Extremely Positive', 'Positive', 'Neutral', 'Neutral', 'Extremely Neutral'))
 
 data = {'Sentiment': sentiment}

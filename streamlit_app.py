@@ -13,9 +13,9 @@ with st.expander('Data'):
 
   df
   
-  st.write('**X**')
+  '''st.write('**X**')
   X = df.drop['Sentiment', axis = 1]
-  X
+  X'''
 
   st.write('**y**')
   y = df.Sentiment
@@ -24,3 +24,10 @@ with st.expander('Data'):
 with st.expander('Data visualization'):
   sentiment_count = df['Sentiment'].value_counts()
   st.scatter_chart(data=df, x='Sentiment', y='sentiment_count', color = 'Sentiment')
+
+
+with stsidebar:
+  st.header('Input Features')
+  sentiment = st.selectbox("Sentiment", ('Extremely Positive', 'Positive', 'Neutral', 'Neutral', 'Extremely Neutral')
+
+data = {'Sentiment': sentiment}

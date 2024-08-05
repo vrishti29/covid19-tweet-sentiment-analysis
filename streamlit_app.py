@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 
-st.title('Machine Learning App')
+st.title('Covid19 Tweets')
 
-st.info('This app builds a machine learnign Model')
+st.info('This app helps in predicting the sentiment of tweets')
 
 with st.expander('Data'):
   try: 
@@ -13,12 +13,12 @@ with st.expander('Data'):
 
   df
   
-  '''st.write('**X**')
+  st.write('**X**')
   X = df.drop['Sentiment', axis = 1]
-  X'''
+  X
 
   st.write('**y**')
-  y = df.Sentiment
+  y = df.Sentiment.unique
   y
 
 with st.expander('Data visualization'):

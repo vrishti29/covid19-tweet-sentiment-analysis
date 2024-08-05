@@ -31,3 +31,4 @@ with stsidebar:
   sentiment = st.selectbox("Sentiment", ('Extremely Positive', 'Positive', 'Neutral', 'Neutral', 'Extremely Neutral'))
 
 data = {'Sentiment': sentiment}
+st.scatter_chart(df[['Sentiment_count']])

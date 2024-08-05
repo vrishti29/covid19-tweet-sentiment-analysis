@@ -15,9 +15,7 @@ with st.expander('Data'):
 
 
 with st.expander('Data visualization'):
-  sentiment_count = df['Sentiment'].value_counts()
-#  st.scatter_chart(data=df, x='Sentiment', y='sentiment_count', color = 'Sentiment')
-  st.scatter_chart(df[['Sentiment_count']])
+
   
 
 with stsidebar:

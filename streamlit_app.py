@@ -12,14 +12,7 @@ with st.expander('Data'):
     df = pd.read_csv("https://raw.githubusercontent.com/vrishti29/machineslearning/master/data/Coronavirus_Tweets.csv", encoding='latin1')
 
   df
-  
-  st.write('**X**')
-  X = df.drop['Sentiment', axis = 1]
-  X
 
-  st.write('**y**')
-  y = df.Sentiment.unique
-  y
 
 with st.expander('Data visualization'):
   sentiment_count = df['Sentiment'].value_counts()

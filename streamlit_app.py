@@ -16,7 +16,7 @@ with st.expander('Data'):
   st.write(df)
 
 
-with stsidebar:
+with st.sidebar:
   st.header('Input Features')
   sentiment = st.selectbox("Sentiment", ('Extremely Positive', 'Positive', 'Neutral', 'Neutral', 'Extremely Neutral'))
 

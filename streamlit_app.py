@@ -1,21 +1,23 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+from wordclous import WordCloud
 
-st.title('Covid19 Tweets')
+st.title('Tweet Sentiment Analysis')
+st.markdown("---", unsafe_allow_html=True)
+st.info('This app shows the analysis of the tweeets')
 
-st.info('This app helps in predicting the sentiment of tweets')
+
+file = st.file_uploader("Upload the File", type=["csv"])
+df = pd.read_csv(file, encoding='latin1')
 
 with st.expander('Data'):
-  try: 
-    df = pd.read_csv("https://raw.githubusercontent.com/vrishti29/machineslearning/master/data/Coronavirus_Tweets.csv", encoding='utf-8')
-  except UnicodeDecodeError:
-    df = pd.read_csv("https://raw.githubusercontent.com/vrishti29/machineslearning/master/data/Coronavirus_Tweets.csv", encoding='latin1')
+  st.write(df)
 
-  df
-
-sentiment_count = df['Sentiment'].value_counts()
-with st.expander('Data visualization'):
-  st.scatter_chart(df[['Sentiment_count']])
+#sentiment_count = df['Sentiment'].value_counts()
+#with st.expander('Data visualization'):
+#  st.scatter_chart(df[['Sentiment_count']])
   
 
 with stsidebar:

@@ -15,10 +15,6 @@ df = pd.read_csv(file, encoding='latin1')
 with st.expander('Data'):
   st.write(df)
 
-#sentiment_count = df['Sentiment'].value_counts()
-#with st.expander('Data visualization'):
-#  st.scatter_chart(df[['Sentiment_count']])
-  
 
 with stsidebar:
   st.header('Input Features')

@@ -21,7 +21,7 @@ if uploaded_file is not None:
         # Display the dataframe
         with st.expander('Data'):
             st.write(dataframe)
-
+            
         df_copy = dataframe.copy()
         df = df_copy[['OriginalTweet', 'Sentiment']]
 

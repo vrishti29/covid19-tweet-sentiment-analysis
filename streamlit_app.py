@@ -19,8 +19,8 @@ if uploaded_file is not None:
         dataframe = pd.read_csv(uploaded_file, encoding='latin1')
 
         # Display the dataframe
-        with st.expander('Data'):
-            st.write(dataframe)
+        st.write('*Data*'):
+        st.write(dataframe)
             
         df_copy = dataframe.copy()
         df = df_copy[['OriginalTweet', 'Sentiment']]

@@ -22,7 +22,6 @@ Columns:
 
 - To get a sense of the most common words used in each category, we generated word clouds for the tweets in each sentiment category. The word clouds gave us a visual representation of the most frequent words used in each sentiment category, with larger words indicating higher frequency. Here are the word clouds for each category:
 
-
 - I also created a bar chart to display the most frequent words for each category. This can help us identify the common themes or topics associated with each category of tweets.
 
 I further explored the data to determine the most frequent origin countries of tweets. The most frequent origin countries of tweets in the analyzed dataset are: Unknown, England, United States, and India.

@@ -8,6 +8,15 @@ This project focuses on analyzing those past tweets to understand how people fel
 
 ## Data Set
 
+The tweets have been pulled from Twitter and manual tagging has been done then. The names and usernames have been given codes to avoid any privacy concerns. You can find the dataset here.
+
+Columns:
+
+Location 📍
+Tweet At 📅
+Original Tweet 🐦
+Sentiment 💬
+
 ## Demo App
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://machinelearning.streamlit.app/)

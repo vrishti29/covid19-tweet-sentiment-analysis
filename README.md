@@ -12,10 +12,10 @@ The tweets have been pulled from Twitter and manual tagging has been done then. 
 
 Columns:
 
-Location 📍
-Tweet At 📅
-Original Tweet 🐦
-Sentiment 💬
+1. Location 📍
+2. Tweet At 📅
+3. Original Tweet 🐦
+4. Sentiment 💬
 
 ## Demo App
 

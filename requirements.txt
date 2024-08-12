@@ -4,4 +4,7 @@ pandas
 scikit-learn
 matplotlib
 WordCloud
-
+string
+seaborn
+nltk
+plotlpy

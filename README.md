@@ -4,14 +4,13 @@
 ## Overview
 The COVID-19 pandemic had a profound impact globally, and during that time, social media became a crucial platform for information sharing and communication. Millions of tweets were posted daily, reflecting public sentiment about the pandemic. 
 
-This project focuses on analyzing those past tweets to understand how people felt about COVID-19, using the BERT (Bidirectional Encoder Representations from Transformers) classifier model for sentiment analysis.
+This project focuses on analyzing those past tweets to understand how people felt about COVID-19 and build a classification model to predict the sentiment of the tweets .
 
 ## Data Set
 
-The tweets have been pulled from Twitter and manual tagging has been done then. The names and usernames have been given codes to avoid any privacy concerns. You can find the dataset here.
+The tweets have been pulled from Twitter and manual tagging has been done then. The names and usernames have been given codes to avoid any privacy concerns.
 
-Columns:
-
+The following information in provided in the dataset:
 1. Location 📍
 2. Tweet At 📅
 3. Original Tweet 🐦
@@ -24,9 +23,9 @@ Columns:
 
 - I also created a bar chart to display the most frequent words for each category. This can help us identify the common themes or topics associated with each category of tweets.
 
-I further explored the data to determine the most frequent origin countries of tweets. The most frequent origin countries of tweets in the analyzed dataset are: Unknown, England, United States, and India.
+- I further explored the data to determine the most frequent origin countries of tweets. The most frequent origin countries of tweets in the analyzed dataset are: Unknown, England, United States, and India.
 
-I also analyzed the most frequent hashtags and mentions in the dataset. The most frequently used hashtags were #coronavirus, #covid_19, #Coronavirus, #COVID2019, and #COVID19. The most frequently mentioned accounts were @realdonaldtrump, @youtube, @borisjohnson, @tesco, and @amazon.
+- I also analyzed the most frequent hashtags and mentions in the dataset. The most frequently used hashtags were #coronavirus, #covid_19, #Coronavirus, #COVID2019, and #COVID19. The most frequently mentioned accounts were @realdonaldtrump, @youtube, @borisjohnson, @tesco, and @amazon.
 
 Overall, these analyses provided valuable insights into the sentiment and content of COVID-19 related tweets, as well as the countries and accounts most commonly associated with these tweets.
 

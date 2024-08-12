@@ -1,10 +1,10 @@
 streamlit>=1.26.0
+seaborn
 numpy
 pandas
 scikit-learn
 matplotlib
 WordCloud
 string
-seaborn
 nltk
 plotlpy

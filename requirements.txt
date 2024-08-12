@@ -6,5 +6,5 @@ scikit-learn
 matplotlib
 WordCloud
 nltk
-plotlpy
+plotly
 string

@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from wordcloud import WordCloud
+from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 import string
 import seaborn as sns
@@ -168,41 +168,23 @@ if uploaded_file is not None:
         'Extremely Negative': 'Negative'})
 
         #converting to lower case
-        df.loc[:, "OriginalTweet"] = df["OriginalTweet"].str.lower()
+        df["OriginalTweet"] = df["OriginalTweet"].str.lower()
 
         #removing extra words
-        df.loc[:, 'clean_tweets'] = df['OriginalTweet'].str.replace('http\S+ | www.\S+', '', case = False)
+        df['clean_tweets'] = df['OriginalTweet'].str.replace('http\S+ | www.\S+', '', case = False)
 
         #removing hashtags
-        df.loc[:, 'clean_tweets'] = df['clean_tweets'].str.replace("[^a-zA-Z#//]", " ")
+        df['clean_tweets'] = df['clean_tweets'].str.replace("[^a-zA-Z#//]", " ")
 
         #remove punctuation
-        df.loc[:, "clean_tweets"] = df['clean_tweets'].apply(lambda x : remove_punctuations(x))
+        df["clean_tweets"] = df['clean_tweets'].apply(lambda x : remove_punctuations(x))
 
         #remove stopwords
-        df.loc[:, 'clean_tweets'] = df['clean_tweets'].apply(lambda x: remove_stopwords(x))    
+        df['clean_tweets'] = df['clean_tweets'].apply(lambda x: remove_stopwords(x))    
 
         # sentiments of tweets distribution table
         label_distribution = df.groupby('Sentiment').count()['OriginalTweet'].reset_index().sort_values(by='OriginalTweet', ascending=False)
-        st.write(label_distribution(cmap='winter'))
-
-        
-
-
-        word_counts = {label: [] for label in label_distribution.Sentiment}
-
-        for text, target in zip(df['clean_tweets'], df['Sentiment']):
-            text = [word for word in text.split()]
-            word_counts[target].extend(text)
-
-        fig, axes = plt.subplots(3, 1, figsize=(8, 30))
-
-        for axis, (target, words) in zip(axes.flatten(), word_counts.items()):
-            bar_info = pd.Series(words).value_counts()[:20]
-            sns.barplot(x=bar_info.values, y=bar_info.index, ax=axis)
-            axis.set_title(f'Top 20 words for {target} sentiment')
-        st.pyplot(plt)
-        
+        st.write(label_distribution)
 
         sentiment_count = df['Sentiment'].value_counts()
         sentiment_count_df = sentiment_count.reset_index()
@@ -214,28 +196,83 @@ if uploaded_file is not None:
         plt.legend(bbox_to_anchor = (1.05, 1), loc='upper left', borderaxespad = 0)
         st.pyplot(plt)
 
+        word_counts = {label: [] for label in label_distribution.Sentiment}
+
+        for text, target in zip(df['clean_tweets'], df['Sentiment']):
+            if isinstance(text, str):
+                word = text.split()
+                word_counts[target].extend(word)
+
         fig, axes = plt.subplots(3, 1, figsize=(8, 30))
 
-        for axis, (target, words) in zip(axes.flatten(), word_counts.items()):
-            bar_info = pd.Series(words).value_counts()[:20]
-            sns.barplot(x=bar_info.values, y=bar_info.index, ax=axis)
-            axis.set_title(f'Top 20 words for {target} sentiment')
-        st.pyplot(plt)
+
         
         # Assuming the text data is in a column named 'Original Tweet'
+        
+        
+        cld_df = df[['clean_tweets', 'Sentiment']]
+        with st.expander('cloud data'):
+            st.write(cld_df)
+
+        # Encoding the sentiments from 0 to 2 i.e., from extremely positive to extremely negative
+        sentiment_map = {"Negative":3, "Neutral":2, "Positive":1}
+        cld_df['Sentiment'] = cld_df['Sentiment'].map(sentiment_map)
+
+        # Plot No- 24 : Most occuring words of all in Tweets
         if 'clean_tweets' in df.columns:
-            text = ' '.join(df['clean_tweets'].dropna().astype(str).tolist())
+            all_words = ' '.join(df['clean_tweets'].dropna().astype(str).tolist())
             
             # Generate word cloud
-            wordcloud = generate_wordcloud(text)
+            wordcloud = WordCloud(
+                background_color = "white",
+                width=800, 
+                height=500, 
+                random_state=21, 
+                max_font_size=110, 
+                stopwords = set(STOPWORDS), 
+                colormap='Set2', 
+                collocations=False,
+            ).generate(all_words)
             
             # Display the word cloud using matplotlib
-            fig, ax = plt.subplots()
+            fig, ax = plt.subplots(figsize = (10, 7))
             ax.imshow(wordcloud, interpolation='bilinear')
             ax.axis('off')
             st.pyplot(fig)
+
         else:
-            st.error("The CSV file does not contain a 'Tweets' column.")
+            st.error("The CSV file does not contain a 'Tweets' column.")        
+
+
+        # Plot No- 26 : Most common occuring words in "Positive" sentiment
+        Positive =' '.join([text for text in cld_df['clean_tweets'][cld_df['Sentiment'] == 1] if isinstance(text, str)])
+
+        wordcloud = WordCloud(background_color = "pink", width=800, height=500, random_state=21, max_font_size=110, stopwords = set(STOPWORDS),colormap='brg',collocations=False).generate(Positive)
+        plt.figure(figsize=(10, 7))
+        plt.imshow(wordcloud, interpolation="bilinear")
+        plt.axis('off')
+        st.pyplot(plt)
+
+        # Plot No- 27 : Most common occuring words in "Neutral" sentiment
+        Neutral =' '.join([text for text in cld_df['clean_tweets'][cld_df['Sentiment'] == 2]])
+
+        wordcloud = WordCloud(background_color = "white", width=800, height=500, random_state=21, max_font_size=110, stopwords = set(STOPWORDS),colormap='nipy_spectral',collocations=False).generate(Neutral)
+        plt.figure(figsize=(10, 7))
+        plt.imshow(wordcloud, interpolation="bilinear")
+        plt.axis('off')
+        st.pyplot(plt)
+
+        # Plot No- 28 : Most common occuring words in "Negative" sentiment
+        Negative =' '.join([text for text in cld_df['clean_tweets'][cld_df['Sentiment'] == 3]])
+
+        wordcloud = WordCloud(width=800, height=500, random_state=21, max_font_size=110, stopwords = set(STOPWORDS),colormap='prism',collocations=False).generate(Negative)
+        plt.figure(figsize=(10, 7))
+        plt.imshow(wordcloud, interpolation="bilinear")
+        plt.axis('off')
+        st.pyplot(plt)
+
+
+
 
 
         

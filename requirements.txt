@@ -5,6 +5,6 @@ pandas
 scikit-learn
 matplotlib
 WordCloud
-string
 nltk
 plotlpy
+string

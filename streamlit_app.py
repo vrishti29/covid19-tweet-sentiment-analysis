@@ -28,6 +28,29 @@ uploaded_file = st.file_uploader("Choose a CSV file")
 
 
 # Function to generate a word cloud
+def generate_wordcloud(sentiment_label, sentiment_value, background_color):
+    st.markdown(f"<h3 style='text-align: center;'>Word Cloud for {sentiment_label} Sentiment Tweets</h3>", unsafe_allow_html=True)
+    
+    if 'clean_tweets' in cld_df.columns:
+        words = ' '.join(cld_df['clean_tweets'][cld_df['Sentiment'] == sentiment_value].dropna().astype(str).tolist())
+        
+        wordcloud = WordCloud(
+            background_color=background_color, 
+            width=800, 
+            height=500, 
+            random_state=21, 
+            max_font_size=110, 
+            stopwords=set(STOPWORDS), 
+            colormap='brg', 
+            collocations=False
+        ).generate(words)
+        
+        fig, ax = plt.subplots(figsize=(10, 7))
+        ax.imshow(wordcloud, interpolation='bilinear')
+        ax.axis('off')
+        st.pyplot(fig)
+
+
 def generate_wordcloud(text):
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
     return wordcloud
@@ -256,6 +279,10 @@ if uploaded_file is not None:
 
 
         # Display the title for the word cloud
+        # Generate word clouds for positive, negative, and neutral sentiments
+        generate_wordcloud("Positive", 1, "pink")
+        generate_wordcloud("Negative", -1, "lightblue")
+        generate_wordcloud("Neutral", 0, "lightgray")
         st.markdown("<h3 style='text-align: center;'>Word Cloud for Positive Sentiment Tweets</h3>", unsafe_allow_html=True)
         
         # Check if the 'clean_tweets' column exists in the DataFrame

@@ -31,6 +31,30 @@ def generate_wwordcloud(text):
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
     return wordcloud
 
+# Function to generate and display word clouds for different sentiments
+def generate_wordcloud(sentiment_label, sentiment_value, background_color):
+    st.markdown(f"<h3 style='text-align: center;'>Word Cloud for {sentiment_label} Sentiment Tweets</h3>", unsafe_allow_html=True)
+                
+    if 'clean_tweets' in cld_df.columns:
+        words = ' '.join(cld_df['clean_tweets'][cld_df['Sentiment'] == sentiment_value].dropna().astype(str).tolist())
+        if words.strip():
+            wordcloud = WordCloud(
+            background_color=background_color, 
+            width=800, 
+            height=500, 
+            random_state=21, 
+            max_font_size=110, 
+            stopwords=set(STOPWORDS), 
+            colormap='brg', 
+            collocations=False
+            ).generate(words)
+                    
+            fig, ax = plt.subplots(figsize=(10, 7))
+            ax.imshow(wordcloud, interpolation='bilinear')
+            ax.axis('off')
+            st.pyplot(fig)
+        else:
+            st.markdown(f"<p style='text-align: center;'>No words available to generate the word cloud for {sentiment_label} sentiment.</p>", unsafe_allow_html=True)
 
 
 def remove_punctuations(text):
@@ -193,6 +217,7 @@ if uploaded_file is not None:
         label_distribution = df.groupby('Sentiment').count()['OriginalTweet'].reset_index().sort_values(by='OriginalTweet', ascending=False)
         st.write(label_distribution)
 
+        # Plot No- 7 : Proportion of Sentiment
         sentiment_count = df['Sentiment'].value_counts()
         sentiment_count_df = sentiment_count.reset_index()
         sentiment_count_df = df['Sentiment'].value_counts().to_list()
@@ -221,11 +246,11 @@ if uploaded_file is not None:
         with st.expander('cloud data'):
             st.write(cld_df)
 
-        # Encoding the sentiments from 0 to 2 i.e., from extremely positive to extremely negative
-        sentiment_map = {"Negative":3, "Neutral":2, "Positive":1}
+        # Encoding the sentiments from -1 to 1 i.e., from positive to negative
+        sentiment_map = {"Negative":-1, "Neutral":0, "Positive":1}
         cld_df['Sentiment'] = cld_df['Sentiment'].map(sentiment_map)
 
-        # Plot No- 24 : Most occuring words of all in Tweets
+        # Plot No- 8 : Most occuring words of all in Tweets
         st.markdown(f"<h3 style='text-align: center;'>Most occuring words in all Tweets</h3>", unsafe_allow_html=True)
         if 'clean_tweets' in df.columns:
             all_words = ' '.join(df['clean_tweets'].dropna().astype(str).tolist())
@@ -251,32 +276,8 @@ if uploaded_file is not None:
         else:
             st.error("The CSV file does not contain a 'Tweets' column.")    
 
-        # Function to generate and display word clouds for different sentiments
-        def generate_wordcloud(sentiment_label, sentiment_value, background_color):
-            st.markdown(f"<h3 style='text-align: center;'>Word Cloud for {sentiment_label} Sentiment Tweets</h3>", unsafe_allow_html=True)
-            
-            if 'clean_tweets' in cld_df.columns:
-                words = ' '.join(cld_df['clean_tweets'][cld_df['Sentiment'] == sentiment_value].dropna().astype(str).tolist())
-                if words.strip():
-                    wordcloud = WordCloud(
-                        background_color=background_color, 
-                        width=800, 
-                        height=500, 
-                        random_state=21, 
-                        max_font_size=110, 
-                        stopwords=set(STOPWORDS), 
-                        colormap='brg', 
-                        collocations=False
-                    ).generate(words)
-                
-                    fig, ax = plt.subplots(figsize=(10, 7))
-                    ax.imshow(wordcloud, interpolation='bilinear')
-                    ax.axis('off')
-                    st.pyplot(fig)
-                else:
-                    st.markdown(f"<p style='text-align: center;'>No words available to generate the word cloud for {sentiment_label} sentiment.</p>", unsafe_allow_html=True)
 
-        generate_wordcloud("Positive", 1, "lightpink")
+        generate_wordcloud("Positive", 1, "lightgreen")
         generate_wordcloud("Negative", -1, "lightblue")
         generate_wordcloud("Neutral", 0, "lightgray")
         

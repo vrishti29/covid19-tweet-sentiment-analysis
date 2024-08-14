@@ -5,14 +5,9 @@ from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 import string
 import seaborn as sns
-import nltk 
-from nltk.corpus import stopwords
+
 import plotly.graph_objects as go
 import plotly.express as px
-
-nltk.download('stopwords')
-nltk.download('wordnet')
-
 
 st.markdown("<h1 style = 'text-align: center;'>Sentiment Analysis</h1>",unsafe_allow_html=True)
 st.markdown("---", unsafe_allow_html=True)
